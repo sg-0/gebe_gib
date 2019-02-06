@@ -35,16 +35,21 @@ def help(bot, update):
     update.message.reply_text('/gib und dir wird gegeben\n/gebe und dir wird gegeben.')
 
 
-def echo(bot, update):
+def log_message(bot, update):
     """Echo the user message."""
-    update.message.reply_text(update.message.text)
+    logger.info(update.message.text)
 
 
 def error(bot, update, error):
     """Log Errors caused by Updates."""
     logger.warning('Update "%s" caused error "%s"', update, error)
 
+
 def gib(bot, update): 
+    update.message.reply_text("Nehme!")
+
+
+def gebe(bot, update): 
     update.message.reply_text("Nehme!")
 
 
@@ -60,9 +65,10 @@ def main():
     dp.add_handler(CommandHandler("start", start))
     dp.add_handler(CommandHandler("help", help))
     dp.add_handler(CommandHandler("gib", gib))
+    dp.add_handler(CommandHandler("gebe", gebe))
 
     # on noncommand i.e message - echo the message on Telegram
-    dp.add_handler(MessageHandler(Filters.text, echo))
+    dp.add_handler(MessageHandler(Filters.text, log_message))
 
     # log all errors
     dp.add_error_handler(error)
