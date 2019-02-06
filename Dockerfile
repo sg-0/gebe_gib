@@ -13,7 +13,8 @@ RUN apt-get -y update && \
 
 RUN pip install python-telegram-bot --upgrade
 
+ADD gebe_gib_bot.py .
 
 USER bot 
 	
-CMD /bin/bash
+CMD python gebe_gib_bot.py

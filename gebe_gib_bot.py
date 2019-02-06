@@ -27,12 +27,12 @@ logger = logging.getLogger(__name__)
 # update. Error handlers also receive the raised TelegramError object in error.
 def start(bot, update):
     """Send a message when the command /start is issued."""
-    update.message.reply_text('Hi!')
+    update.message.reply_text('Bittet, dann wird euch gegeben.')
 
 
 def help(bot, update):
     """Send a message when the command /help is issued."""
-    update.message.reply_text('Help!')
+    update.message.reply_text('/gib und dir wird gegeben\n/gebe und dir wird gegeben.')
 
 
 def echo(bot, update):
@@ -44,11 +44,14 @@ def error(bot, update, error):
     """Log Errors caused by Updates."""
     logger.warning('Update "%s" caused error "%s"', update, error)
 
+def gib(bot, update): 
+    update.message.reply_text("Nehme!")
+
 
 def main():
     """Start the bot."""
     # Create the EventHandler and pass it your bot's token.
-    updater = Updater("TOKEN")
+    updater = Updater("770515348:AAFG5vNsPXMKIgDs-xhrgjOR0OypoDYr2c4")
 
     # Get the dispatcher to register handlers
     dp = updater.dispatcher
@@ -56,6 +59,7 @@ def main():
     # on different commands - answer in Telegram
     dp.add_handler(CommandHandler("start", start))
     dp.add_handler(CommandHandler("help", help))
+    dp.add_handler(CommandHandler("gib", gib))
 
     # on noncommand i.e message - echo the message on Telegram
     dp.add_handler(MessageHandler(Filters.text, echo))
