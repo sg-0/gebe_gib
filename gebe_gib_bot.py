@@ -20,7 +20,13 @@ import logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("GEBE_GIB_BOT")
+
+def utostr(user):
+    if user.username: 
+        return str(user.id) + ":" + user.username
+    else:
+        return str(user.id)
 
 
 # Define a few command handlers. These usually take the two arguments bot and
@@ -28,16 +34,17 @@ logger = logging.getLogger(__name__)
 def start(bot, update):
     """Send a message when the command /start is issued."""
     update.message.reply_text('Bittet, dann wird euch gegeben.')
+    logger.info(utostr(update.effective_user) + " hat sich registriert")
 
 
 def help(bot, update):
     """Send a message when the command /help is issued."""
     update.message.reply_text('/gib und dir wird gegeben\n/gebe und dir wird gegeben.')
-
+    logger.info("Hilfe angezeigt fuer " + utostr(update.effective_user))
 
 def log_message(bot, update):
     """Echo the user message."""
-    logger.info(update.message.text)
+    logger.info(utostr(update.effective_user) + " schrieb: " + update.message.text)
 
 
 def error(bot, update, error):
@@ -47,10 +54,7 @@ def error(bot, update, error):
 
 def gib(bot, update): 
     update.message.reply_text("Nehme!")
-
-
-def gebe(bot, update): 
-    update.message.reply_text("Nehme!")
+    logger.info(utostr(update.effective_user) + " hat genommen")
 
 
 def main():
@@ -65,7 +69,7 @@ def main():
     dp.add_handler(CommandHandler("start", start))
     dp.add_handler(CommandHandler("help", help))
     dp.add_handler(CommandHandler("gib", gib))
-    dp.add_handler(CommandHandler("gebe", gebe))
+    dp.add_handler(CommandHandler("gebe", gib))
 
     # on noncommand i.e message - echo the message on Telegram
     dp.add_handler(MessageHandler(Filters.text, log_message))
