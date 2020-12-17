@@ -53,7 +53,7 @@ def error(bot, update, error):
 
 
 def gib(bot, update): 
-    update.message.reply_text("Nehme!")
+    update.message.reply_text("nimm!")
     logger.info(utostr(update.effective_user) + " hat genommen")
 
 
